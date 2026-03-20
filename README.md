@@ -1,6 +1,6 @@
 # Cerdacul cu Amintiri Static Website
 
-This is a static website for a traditional house from Bucovina, replicating the menu and page structure of pensiuneabucovina.ro.
+This is a static website for a traditional house from Bucovina.
 
 ## Structure
 - `index.html`: Homepage
