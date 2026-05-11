@@ -169,6 +169,9 @@
 .dropdown:hover .dropdown-content {
   display: block;
 }
+.dropdown.open .dropdown-content {
+  display: block !important;
+}
 @media (max-width: 768px) {
   .dropdown-content {
     min-width: 130px;
@@ -212,18 +215,33 @@ body {
 }
 
 header {
-  background: #263238;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  transform: none !important;
+  background: rgba(38,50,56,0.95);
   color: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  border-radius: 0 !important;
+  padding: 0.5em 1em !important;
+  z-index: 999;
+}
+header nav {
+  width: 100%;
 }
 nav ul {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
   justify-content: center;
-  gap: 2em;
-  flex-wrap: nowrap;
+  gap: 0.6em !important;
+  width: 100%;
+  flex-wrap: wrap !important;
 }
 nav li {
   margin: 0;
@@ -232,14 +250,25 @@ nav a {
   color: #fff;
   text-decoration: none;
   font-weight: 500;
-  font-size: 1.1em;
-  padding: 0.8em 1.2em;
-  border-radius: 4px;
+  font-size: 1.05em;
+  padding: 0.75em 1em;
+  border-radius: 6px;
   transition: background 0.2s;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 nav a:hover {
-  background: #37474f;
+  background: rgba(55,71,79,0.95);
+}
+nav .dropdown-content {
+  left: auto !important;
+  right: 0 !important;
+  width: auto !important;
+  min-width: 180px !important;
+}
+main {
+  margin-top: 5rem !important;
 }
 @media (max-width: 1024px) {
   nav a {
@@ -438,8 +467,14 @@ button:hover {
 /* Floating menu styles are handled inline for homepage. Remove footer styles. */
 @media (max-width: 600px) {
   nav ul {
-    flex-direction: column;
-    gap: 0.5em;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.4em;
+    justify-content: center;
+  }
+  nav a {
+    padding: 0.65em 0.9em;
+    font-size: 0.95em;
   }
   main {
     padding: 1em 0.5em 5em 0.5em;
