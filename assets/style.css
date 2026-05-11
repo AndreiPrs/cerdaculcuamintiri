@@ -1,8 +1,8 @@
 /* Animated reservation button */
 #rezervare-btn {
   position: fixed;
-  bottom: 32px;
-  right: 32px;
+  bottom: 20px;
+  right: 20px;
   background: #263238;
   color: #fff;
   font-family: 'Arhaic Romanesc', Arial, sans-serif;
@@ -32,6 +32,37 @@
   opacity: 1;
   box-shadow: 0 8px 32px rgba(0,0,0,0.22);
 }
+@media (max-width: 768px) {
+  #rezervare-btn {
+    bottom: 16px;
+    right: 16px;
+    font-size: 1em;
+    padding: 0.6em 1.5em;
+    min-width: 50px;
+    min-height: 50px;
+  }
+  #rezervare-btn:hover {
+    font-size: 1.1em;
+    padding: 0.7em 2em;
+    min-width: 70px;
+    min-height: 60px;
+  }
+}
+@media (max-width: 480px) {
+  #rezervare-btn {
+    bottom: 12px;
+    right: 12px;
+    font-size: 0.9em;
+    padding: 0.5em 1.2em;
+    min-width: 45px;
+    min-height: 45px;
+  }
+  #rezervare-btn:hover {
+    font-size: 0.95em;
+    padding: 0.6em 1.5em;
+  }
+}
+/* Gallery modal styles */
 #gallery-modal {
   display: none;
   position: fixed;
@@ -50,6 +81,7 @@
   max-height: 80vh;
   border-radius: 16px;
   box-shadow: 0 4px 24px #000;
+  object-fit: contain;
 }
 #gallery-close, #gallery-prev, #gallery-next {
   font-size: 2em;
@@ -58,6 +90,25 @@
   color: #fff;
   cursor: pointer;
   z-index: 1001;
+  padding: 10px 15px;
+  min-height: 44px;
+  min-width: 44px;
+}
+@media (max-width: 768px) {
+  #gallery-modal img {
+    max-width: 90vw;
+    max-height: 70vh;
+  }
+  #gallery-close, #gallery-prev, #gallery-next {
+    font-size: 1.5em;
+    padding: 8px 12px;
+  }
+}
+@media (max-width: 480px) {
+  #gallery-modal img {
+    max-width: 95vw;
+    max-height: 60vh;
+  }
 }
 #room-gallery-sections {
   display: flex;
@@ -86,13 +137,80 @@
 .room-gallery-scroll img:hover {
   transform: scale(1.05);
 }
+/* Dropdown menu styles for mobile */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: rgba(38,50,56,0.95);
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1001;
+  top: 100%;
+  left: 0;
+  border-radius: 8px;
+}
+.dropdown-content a {
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  border-radius: 4px;
+  transition: background 0.2s;
+  font-size: 0.95em;
+}
+.dropdown-content a:hover {
+  background-color: rgba(55,71,79,0.8);
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+@media (max-width: 768px) {
+  .dropdown-content {
+    min-width: 130px;
+    padding: 10px 12px;
+  }
+  .dropdown-content a {
+    padding: 10px 12px;
+    font-size: 0.9em;
+  }
+  .room-section h2, .room-section h3 {
+    font-size: 1.1em;
+  }
+}
+@media (max-width: 480px) {
+  .dropdown-content {
+    min-width: 110px;
+    padding: 8px 10px;
+  }
+  .dropdown-content a {
+    padding: 8px 10px;
+    font-size: 0.85em;
+  }
+  .room-section h2, .room-section h3 {
+    font-size: 1em;
+  }
+  .room-gallery-scroll {
+    gap: 0.3em;
+  }
+}
 body {
   font-family: 'Arhaic Romanesc', Arial, sans-serif;
   margin: 0;
   padding: 0;
   background: linear-gradient(135deg, #e8f0f2 0%, #f5f5f5 100%);
   color: #222;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
+* {
+  box-sizing: border-box;
+}
+
 header {
   background: #263238;
   color: #fff;
@@ -105,6 +223,7 @@ nav ul {
   display: flex;
   justify-content: center;
   gap: 2em;
+  flex-wrap: nowrap;
 }
 nav li {
   margin: 0;
@@ -117,9 +236,34 @@ nav a {
   padding: 0.8em 1.2em;
   border-radius: 4px;
   transition: background 0.2s;
+  display: inline-block;
 }
 nav a:hover {
   background: #37474f;
+}
+@media (max-width: 1024px) {
+  nav a {
+    font-size: 1em;
+    padding: 0.7em 1em;
+  }
+}
+@media (max-width: 768px) {
+  nav ul {
+    gap: 0.5em;
+  }
+  nav a {
+    font-size: 0.95em;
+    padding: 0.6em 0.8em;
+  }
+}
+@media (max-width: 480px) {
+  nav ul {
+    gap: 0.3em;
+  }
+  nav a {
+    font-size: 0.75em;
+    padding: 0.4em 0.5em;
+  }
 }
 main {
   padding: 3em 1em 5em 1em;
@@ -130,10 +274,64 @@ h1 {
   font-size: 2.2em;
   margin-bottom: 0.5em;
   color: #37474f;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+h2 {
+  font-size: 1.5em;
+  color: #37474f;
 }
 p {
   font-size: 1.1em;
   line-height: 1.6;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+@media (max-width: 1024px) {
+  main {
+    padding: 2.5em 1.5em 5em 1.5em;
+  }
+  h1 {
+    font-size: 2em;
+  }
+  h2 {
+    font-size: 1.3em;
+  }
+  p {
+    font-size: 1em;
+  }
+}
+@media (max-width: 768px) {
+  main {
+    padding: 2em 1em 5em 1em;
+    margin-top: 2em;
+  }
+  h1 {
+    font-size: 1.8em;
+  }
+  h2 {
+    font-size: 1.2em;
+  }
+  p {
+    font-size: 0.95em;
+  }
+}
+@media (max-width: 480px) {
+  main {
+    padding: 1.5em 0.8em 5em 0.8em;
+    margin-top: 1em;
+  }
+  h1 {
+    font-size: 1.5em;
+    margin-bottom: 0.8em;
+  }
+  h2 {
+    font-size: 1.1em;
+  }
+  p {
+    font-size: 0.9em;
+    line-height: 1.5;
+  }
 }
 form {
   background: #fff;
@@ -145,6 +343,7 @@ form {
   display: flex;
   flex-direction: column;
   gap: 1em;
+  width: 100%;
 }
 label {
   font-weight: 500;
@@ -155,6 +354,7 @@ input, button {
   border-radius: 4px;
   border: 1px solid #b0bec5;
   font-size: 1em;
+  width: 100%;
 }
 input:focus {
   outline: 2px solid #90caf9;
@@ -170,6 +370,26 @@ button {
 }
 button:hover {
   background: #37474f;
+}
+@media (max-width: 768px) {
+  form {
+    padding: 1.5em;
+    gap: 0.8em;
+  }
+  input, button {
+    padding: 0.6em;
+    font-size: 0.95em;
+  }
+}
+@media (max-width: 480px) {
+  form {
+    padding: 1em;
+    gap: 0.7em;
+  }
+  input, button {
+    padding: 0.6em;
+    font-size: 1em;
+  }
 }
 #photo-gallery {
   display: flex;
@@ -189,6 +409,32 @@ button:hover {
 #photo-gallery img:hover {
   transform: scale(1.04);
 }
+@media (max-width: 1024px) {
+  #photo-gallery img {
+    width: 180px;
+    height: 135px;
+  }
+}
+@media (max-width: 768px) {
+  #photo-gallery {
+    gap: 12px;
+    margin-top: 1.5em;
+  }
+  #photo-gallery img {
+    width: 150px;
+    height: 120px;
+  }
+}
+@media (max-width: 480px) {
+  #photo-gallery {
+    gap: 10px;
+    margin-top: 1em;
+  }
+  #photo-gallery img {
+    width: 100px;
+    height: 80px;
+  }
+}
 /* Floating menu styles are handled inline for homepage. Remove footer styles. */
 @media (max-width: 600px) {
   nav ul {
@@ -205,5 +451,35 @@ button:hover {
   form {
     padding: 1em;
     max-width: 100%;
+  }
+}
+/* Additional mobile-specific optimizations */
+@media (max-width: 480px) {
+  header {
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+    top: 0;
+  }
+  body {
+    padding-top: 0;
+  }
+  main {
+    margin-top: 1rem;
+    padding: 1rem 0.5rem 6rem 0.5rem;
+  }
+  h1, h2, h3 {
+    word-break: break-word;
+  }
+  /* Improve touch target sizes for mobile */
+  a, button {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #gallery-modal img {
+    max-width: 95vw;
+    max-height: 70vh;
   }
 }

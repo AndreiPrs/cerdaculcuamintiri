@@ -2,12 +2,44 @@
 <html lang="ro">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Despre Cerdacul cu Amintiri - Informații despre cazarea tradițională și facilități.">
+  <meta name="theme-color" content="#263238">
   <title>Despre - Cerdacul cu Amintiri</title>
   <link rel="stylesheet" href="assets/style.css">
   <link href="https://fonts.cdnfonts.com/css/arhaic-romanesc" rel="stylesheet">
   <style>
     h1, h2, nav a {
       font-family: 'Arhaic Romanesc', serif !important;
+    }
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: rgba(38,50,56,0.95);
+      min-width: 160px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      padding: 12px 16px;
+      z-index: 1;
+      top: 100%;
+      left: 0;
+      border-radius: 8px;
+    }
+    .dropdown-content a {
+      color: white;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      border-radius: 4px;
+    }
+    .dropdown-content a:hover {
+      background-color: rgba(55,71,79,0.8);
+    }
+    .dropdown:hover .dropdown-content {
+      display: block;
     }
   </style>
 </head>
@@ -17,7 +49,14 @@
     <nav>
       <ul style="display:flex; gap:2em; align-items:center; margin:0; padding:0;">
         <li><a href="index.html">Acasă</a></li>
-        <li><a href="about.html">Despre</a></li>
+        <li class="dropdown">
+          <a href="about.html">Despre</a>
+          <div class="dropdown-content">
+            <a href="about.html">Despre Cerdacul</a>
+            <a href="attractions.html">Atractii</a>
+            <a href="benefits.html">Beneficii</a>
+          </div>
+        </li>
         <li><a href="gallery.html">Galerie</a></li>
         <li><a href="reservation.html">Rezervare</a></li>
         <li><a href="contact.html">Contact</a></li>
@@ -47,8 +86,11 @@
       - Încălzire centralizată<br>
       - Termostat separat pentru parter si mansardă</p>
       <p><strong>Exterior</strong><br>
-      - Parcare în curte<br>
-      - Loc amenajat cu grătar si sobă cu ceaun (acoperite)</p>
+      - Foisor inchis, perfect si pentru iarna, cu gratar si plita zidite din caramida<br>
+      - Terasa de vara<br>
+      - Loc de joaca pentru copii<br>
+      - Curte amenajata<br>
+      - Locuri de parcare in interiorul curtii</p>
       <p><strong>Puncte de interes în apropiere</strong><br>
       - La sub 5 minute de mers pe jos: Hotel Eden cu zonă spa (accesibilă si pentru clienti externi)<br>
       - La sub 10 minute cu masina: Pârtia Bucovina<br>

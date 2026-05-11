@@ -7,7 +7,9 @@ const roomManifests = {
   'dormitor2': ["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg"],
   'dormitor3': ["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg"],
   'hol': ["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg","photo6.jpg"],
-  'living2': ["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg"]
+  'living2': ["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg"],
+  'curte': ["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg"],
+  'foisor': ["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg"]
 };
 
 const parterRooms = [
@@ -21,6 +23,10 @@ const etajRooms = [
   { name: 'Dormitor 3 etaj', folder: 'dormitor3' },
   { name: 'Hol', folder: 'hol' },
   { name: 'Living etaj', folder: 'living2' }
+];
+const exteriorRooms = [
+  { name: 'Curte', folder: 'curte' },
+  { name: 'Foisor', folder: 'foisor' }
 ];
 
 function createRoomGallery(room, parentId) {
@@ -57,6 +63,7 @@ function createRoomGallery(room, parentId) {
 parterRooms.forEach(room => createRoomGallery(room, 'parter-gallery'));
 etajRooms.forEach(room => createRoomGallery(room, 'etaj-gallery'));
 
+exteriorRooms.forEach(room => createRoomGallery(room, 'exterior-gallery'));
 // Modal popup
 let modal = document.getElementById('gallery-modal');
 if (!modal) {
@@ -75,10 +82,11 @@ if (!modal) {
   modal.style.flexDirection = 'column';
   modal.style.display = 'none'; // Ensure modal is hidden by default
   modal.innerHTML = `
-    <button id="gallery-close" style="position:absolute;top:24px;right:32px;font-size:2em;background:none;border:none;color:#fff;cursor:pointer;">&times;</button>
-    <button id="gallery-prev" style="position:absolute;left:32px;top:50%;transform:translateY(-50%);font-size:2em;background:none;border:none;color:#fff;cursor:pointer;">&#8592;</button>
-    <img id="gallery-modal-img" style="max-width:80vw;max-height:80vh;border-radius:16px;box-shadow:0 4px 24px #000;" />
-    <button id="gallery-next" style="position:absolute;right:32px;top:50%;transform:translateY(-50%);font-size:2em;background:none;border:none;color:#fff;cursor:pointer;">&#8594;</button>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:16px;position:relative;">
+      <button id="gallery-close" style="position:absolute;top:8px;right:8px;z-index:1002;font-size:1.4em;background:transparent;border:none;color:#fff;cursor:pointer;padding:8px 10px;border-radius:50%;min-height:40px;min-width:40px;">&times;</button>
+      <img id="gallery-modal-img" style="max-width:80vw;max-height:80vh;border-radius:16px;box-shadow:0 4px 24px #000;" />
+      <div id="gallery-dots" style="display:flex;gap:8px;justify-content:center;"></div>
+    </div>
   `;
   document.body.appendChild(modal);
 }
@@ -90,26 +98,80 @@ function openModal(images, src) {
   currentImages = images.filter(s => !s.includes('undefined'));
   currentIndex = currentImages.indexOf(src);
   if (currentIndex === -1) currentIndex = 0;
+  createDots();
   showModalImage();
   modal.style.display = 'flex';
+}
+
+function createDots() {
+  const dotsContainer = document.getElementById('gallery-dots');
+  dotsContainer.innerHTML = '';
+  currentImages.forEach((_, idx) => {
+    const dot = document.createElement('button');
+    dot.style.width = '12px';
+    dot.style.height = '12px';
+    dot.style.borderRadius = '50%';
+    dot.style.border = '2px solid #fff';
+    dot.style.background = idx === currentIndex ? '#fff' : 'rgba(255,255,255,0.3)';
+    dot.style.cursor = 'pointer';
+    dot.style.transition = 'all 0.3s';
+    dot.style.padding = '0';
+    dot.style.minHeight = 'auto';
+    dot.style.minWidth = 'auto';
+    dot.onclick = () => {
+      currentIndex = idx;
+      showModalImage();
+      updateDots();
+    };
+    dotsContainer.appendChild(dot);
+  });
+}
+
+function updateDots() {
+  const dots = document.querySelectorAll('#gallery-dots button');
+  dots.forEach((dot, idx) => {
+    dot.style.background = idx === currentIndex ? '#fff' : 'rgba(255,255,255,0.3)';
+  });
 }
 
 function showModalImage() {
   const img = document.getElementById('gallery-modal-img');
   img.src = currentImages[currentIndex];
+  updateDots();
 }
 
 document.getElementById('gallery-close').onclick = () => {
   modal.style.display = 'none';
 };
-document.getElementById('gallery-prev').onclick = () => {
-  currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
-  showModalImage();
-};
-document.getElementById('gallery-next').onclick = () => {
+
+function goNext() {
+  if (!currentImages.length) return;
   currentIndex = (currentIndex + 1) % currentImages.length;
   showModalImage();
-};
+}
+
+function goPrev() {
+  if (!currentImages.length) return;
+  currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+  showModalImage();
+}
+
+const modalImg = document.getElementById('gallery-modal-img');
+if (modalImg) {
+  modalImg.onclick = function(e) {
+    const rect = modalImg.getBoundingClientRect();
+    const x = e.clientX;
+    if (x < rect.left + rect.width / 2) goPrev(); else goNext();
+  };
+  modalImg.addEventListener('touchend', function(e) {
+    const touch = e.changedTouches && e.changedTouches[0];
+    if (!touch) return;
+    const rect = modalImg.getBoundingClientRect();
+    const x = touch.clientX;
+    if (x < rect.left + rect.width / 2) goPrev(); else goNext();
+  }, { passive: true });
+}
+
 modal.onclick = function(e) {
   if (e.target === modal) modal.style.display = 'none';
 };
