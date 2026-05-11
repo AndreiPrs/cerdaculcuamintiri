@@ -223,12 +223,12 @@ header {
   align-items: center;
   justify-content: center;
   width: auto !important;
-  max-width: calc(100vw - 1rem) !important;
+  max-width: 90vw !important;
   background: rgba(38,50,56,0.95);
   color: #fff;
   box-shadow: 0 2px 12px rgba(0,0,0,0.15);
   border-radius: 32px !important;
-  padding: 0.4em 0.75em !important;
+  padding: 0.3em 0.5em !important;
   z-index: 999;
 }
 header nav {
@@ -242,7 +242,7 @@ nav ul {
   flex-direction: row !important;
   align-items: center !important;
   justify-content: center;
-  gap: 0.4em !important;
+  gap: 0.2em !important;
   width: 100%;
   flex-wrap: nowrap !important;
   white-space: nowrap;
@@ -257,8 +257,8 @@ nav a {
   color: #fff;
   text-decoration: none;
   font-weight: 500;
-  font-size: clamp(0.8rem, 1.1vw, 1.05em);
-  padding: 0.55em 0.8em;
+  font-size: clamp(0.75rem, 0.9vw, 1.05em);
+  padding: 0.5em 0.65em;
   border-radius: 6px;
   transition: background 0.2s;
   display: inline-flex;
@@ -290,20 +290,20 @@ main {
 }
 @media (max-width: 768px) {
   nav ul {
-    gap: 0.35em;
+    gap: 0.2em;
   }
   nav a {
-    font-size: clamp(0.75rem, 1.4vw, 0.95em);
-    padding: 0.45em 0.65em;
+    font-size: clamp(0.7rem, 1.8vw, 0.85em);
+    padding: 0.35em 0.5em;
   }
 }
 @media (max-width: 480px) {
   nav ul {
-    gap: 0.2em;
+    gap: 0.1em;
   }
   nav a {
-    font-size: clamp(0.7rem, 2vw, 0.8em);
-    padding: 0.35em 0.5em;
+    font-size: clamp(0.6rem, 2vw, 0.7em);
+    padding: 0.25em 0.35em;
   }
 }
 main {
