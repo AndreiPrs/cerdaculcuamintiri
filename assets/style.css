@@ -224,13 +224,15 @@ header {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: auto !important;
-  max-width: 90vw !important;
+  /* full-width bubble with page padding */
+  width: calc(100% - 2rem) !important;
+  max-width: calc(100% - 2rem) !important;
+  min-width: 0 !important;
   background: rgba(38,50,56,0.95);
   color: #fff;
   box-shadow: 0 2px 12px rgba(0,0,0,0.15);
   border-radius: 32px !important;
-  padding: 0.3em 0.5em !important;
+  padding: 0.35em 0.75em !important;
   z-index: 999;
 }
 header nav {
@@ -239,11 +241,11 @@ header nav {
 nav ul {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0 0.25rem;
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
-  justify-content: center;
+  justify-content: space-between;
   gap: 0.2em !important;
   width: 100%;
   flex-wrap: nowrap !important;
@@ -259,16 +261,17 @@ nav a {
   color: #fff;
   text-decoration: none;
   font-weight: 500;
-  font-size: clamp(0.75rem, 0.9vw, 1.05em);
-  padding: 0.5em 0.65em;
+  /* responsive shrinkable sizing so items always fit one row */
+  font-size: clamp(12px, 1.8vw, 18px) !important;
+  padding: clamp(6px, 0.8vw, 12px) clamp(8px, 0.9vw, 16px) !important;
   border-radius: 6px;
-  transition: background 0.2s;
+  transition: background 0.2s, font-size 0.15s;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   white-space: nowrap;
   min-width: 0;
-  flex: 1 1 auto;
+  flex: 0 1 auto;
 }
 nav a:hover {
   background: rgba(55,71,79,0.95);
@@ -308,14 +311,28 @@ main {
     padding: 0.25em 0.35em;
   }
 }
-@media (max-width: 360px) {
+/* Very small screens: allow two-row menu to avoid overlap */
+@media (max-width: 420px) {
   nav ul {
     flex-wrap: wrap !important;
-    gap: 0.2em;
+    gap: 0.35em !important;
+    justify-content: center;
+    padding: 0 0.5rem;
+  }
+  nav li {
+    flex: 0 0 48% !important;
+    max-width: 48% !important;
+    box-sizing: border-box;
   }
   nav a {
-    font-size: clamp(0.6rem, 2.5vw, 0.75em);
-    padding: 0.3em 0.4em;
+    display: block !important;
+    white-space: normal !important;
+    text-align: center !important;
+    font-size: 13px !important;
+    padding: 6px 8px !important;
+  }
+  header {
+    padding: 0.35em 0.6em !important;
   }
 }
 main {
