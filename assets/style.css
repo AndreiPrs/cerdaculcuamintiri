@@ -126,9 +126,11 @@
 }
 .room-gallery-scroll {
   display: flex;
-  overflow-x: auto;
+  overflow: hidden;
   gap: 0.5em;
   padding-bottom: 0.5em;
+  justify-content: center;
+  width: 100%;
 }
 .room-gallery-scroll img {
   flex: 0 0 auto;

@@ -41,15 +41,16 @@ function createRoomGallery(room, parentId) {
   scrollDiv.className = 'room-gallery-scroll';
 
   const imageSources = roomManifests[room.folder].map(name => `photos/${room.folder}/${name}`);
-  imageSources.forEach(src => {
+  // Only show first 2 images
+  imageSources.slice(0, 2).forEach(src => {
     const img = document.createElement('img');
     img.src = src;
     img.alt = room.name;
     img.onerror = function() { this.style.display = 'none'; };
-    img.style.width = '180px';
-    img.style.height = '120px';
+    img.style.width = '48%';
+    img.style.height = 'auto';
+    img.style.aspectRatio = '3/2';
     img.style.objectFit = 'cover';
-    img.style.margin = '8px';
     img.style.borderRadius = '8px';
     img.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
     img.addEventListener('click', () => openModal(imageSources, src));
@@ -83,7 +84,6 @@ if (!modal) {
   modal.style.display = 'none'; // Ensure modal is hidden by default
   modal.innerHTML = `
     <div style="display:flex;flex-direction:column;align-items:center;gap:16px;position:relative;">
-      <button id="gallery-close" style="position:absolute;top:8px;right:8px;z-index:1002;font-size:1.4em;background:transparent;border:none;color:#fff;cursor:pointer;padding:8px 10px;border-radius:50%;min-height:40px;min-width:40px;">&times;</button>
       <img id="gallery-modal-img" style="max-width:80vw;max-height:80vh;border-radius:16px;box-shadow:0 4px 24px #000;" />
       <div id="gallery-dots" style="display:flex;gap:8px;justify-content:center;"></div>
     </div>
@@ -140,8 +140,10 @@ function showModalImage() {
   updateDots();
 }
 
-document.getElementById('gallery-close').onclick = () => {
-  modal.style.display = 'none';
+modal.onclick = (e) => {
+  if (e.target === modal) {
+    modal.style.display = 'none';
+  }
 };
 
 function goNext() {
