@@ -287,6 +287,12 @@ nav .dropdown-content {
 main {
   margin-top: 5rem !important;
 }
+/* Extra spacing for 2-row menu on very small screens */
+@media (max-width: 420px) {
+  main {
+    margin-top: 10rem !important;
+  }
+}
 @media (max-width: 1024px) {
   nav a {
     font-size: 1em;
