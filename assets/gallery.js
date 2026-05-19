@@ -83,13 +83,15 @@ if (!modal) {
   modal.style.flexDirection = 'column';
   modal.style.display = 'none'; // Ensure modal is hidden by default
   modal.innerHTML = `
-    <button id="gallery-close" style="position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.2);border:2px solid white;color:white;font-size:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;z-index:10;font-weight:bold;padding:0;line-height:1;">✕</button>
-    <div style="display:flex;align-items:center;justify-content:center;gap:24px;position:relative;width:100%;height:100%;">
-      <button id="gallery-prev" style="position:absolute;left:20px;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.2);border:2px solid white;color:white;font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;z-index:10;font-weight:bold;">❮</button>
-      <img id="gallery-modal-img" style="max-width:80vw;max-height:80vh;border-radius:16px;box-shadow:0 4px 24px #000;" />
-      <button id="gallery-next" style="position:absolute;right:20px;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.2);border:2px solid white;color:white;font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;z-index:10;font-weight:bold;">❯</button>
+    <button id="gallery-close" style="position:fixed;top:20px;right:20px;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.2);border:2px solid white;color:white;font-size:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;z-index:1001;font-weight:bold;padding:0;line-height:1;">✕</button>
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;width:100%;height:100%;padding:60px 20px 80px 20px;box-sizing:border-box;overflow-y:auto;">
+      <div style="position:relative;display:flex;align-items:center;justify-content:center;width:100%;gap:24px;">
+        <button id="gallery-prev" style="position:absolute;left:0;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.2);border:2px solid white;color:white;font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;z-index:10;font-weight:bold;flex-shrink:0;">❮</button>
+        <img id="gallery-modal-img" style="max-width:90vw;max-height:70vh;border-radius:16px;box-shadow:0 4px 24px #000;" />
+        <button id="gallery-next" style="position:absolute;right:0;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.2);border:2px solid white;color:white;font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;z-index:10;font-weight:bold;flex-shrink:0;">❯</button>
+      </div>
+      <div id="gallery-dots" style="display:flex;gap:12px;justify-content:center;margin-top:16px;"></div>
     </div>
-    <div id="gallery-dots" style="display:flex;gap:12px;justify-content:center;position:absolute;bottom:30px;z-index:10;"></div>
   `;
   document.body.appendChild(modal);
 }
