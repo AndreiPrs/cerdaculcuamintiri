@@ -42,7 +42,7 @@ function createRoomGallery(room, parentId) {
 
   const imageSources = roomManifests[room.folder].map(name => `photos/${room.folder}/${name}`);
   // Only show first 2 images
-  imageSources.slice(0, 2).forEach(src => {
+  imageSources.slice(0, 2).forEach((src, index) => {
     const img = document.createElement('img');
     img.src = src;
     img.alt = room.name;
@@ -53,7 +53,7 @@ function createRoomGallery(room, parentId) {
     img.style.objectFit = 'cover';
     img.style.borderRadius = '8px';
     img.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
-    img.addEventListener('click', () => openModal(imageSources, src));
+    img.addEventListener('click', () => openModal(imageSources, index));
     scrollDiv.appendChild(img);
   });
 
@@ -83,10 +83,13 @@ if (!modal) {
   modal.style.flexDirection = 'column';
   modal.style.display = 'none'; // Ensure modal is hidden by default
   modal.innerHTML = `
-    <div style="display:flex;flex-direction:column;align-items:center;gap:16px;position:relative;">
+    <button id="gallery-close" style="position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.2);border:2px solid white;color:white;font-size:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;z-index:10;font-weight:bold;padding:0;line-height:1;">✕</button>
+    <div style="display:flex;align-items:center;justify-content:center;gap:24px;position:relative;width:100%;height:100%;">
+      <button id="gallery-prev" style="position:absolute;left:20px;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.2);border:2px solid white;color:white;font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;z-index:10;font-weight:bold;">❮</button>
       <img id="gallery-modal-img" style="max-width:80vw;max-height:80vh;border-radius:16px;box-shadow:0 4px 24px #000;" />
-      <div id="gallery-dots" style="display:flex;gap:8px;justify-content:center;"></div>
+      <button id="gallery-next" style="position:absolute;right:20px;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.2);border:2px solid white;color:white;font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;z-index:10;font-weight:bold;">❯</button>
     </div>
+    <div id="gallery-dots" style="display:flex;gap:12px;justify-content:center;position:absolute;bottom:30px;z-index:10;"></div>
   `;
   document.body.appendChild(modal);
 }
@@ -94,13 +97,61 @@ if (!modal) {
 let currentImages = [];
 let currentIndex = 0;
 
-function openModal(images, src) {
+function openModal(images, startIndex) {
   currentImages = images.filter(s => !s.includes('undefined'));
-  currentIndex = currentImages.indexOf(src);
-  if (currentIndex === -1) currentIndex = 0;
+  currentIndex = startIndex;
+  if (currentIndex < 0 || currentIndex >= currentImages.length) currentIndex = 0;
   createDots();
   showModalImage();
   modal.style.display = 'flex';
+  
+  // Setup modal image event handlers
+  const modalImg = document.getElementById('gallery-modal-img');
+  if (modalImg && !modalImg.__handlersSetup) {
+    modalImg.__handlersSetup = true;
+    modalImg.onclick = function(e) {
+      const rect = modalImg.getBoundingClientRect();
+      const x = e.clientX;
+      if (x < rect.left + rect.width / 2) goPrev(); else goNext();
+    };
+    modalImg.addEventListener('touchend', function(e) {
+      const touch = e.changedTouches && e.changedTouches[0];
+      if (!touch) return;
+      const rect = modalImg.getBoundingClientRect();
+      const x = touch.clientX;
+      if (x < rect.left + rect.width / 2) goPrev(); else goNext();
+    }, { passive: true });
+  }
+
+  // Setup arrow button handlers
+  const prevBtn = document.getElementById('gallery-prev');
+  const nextBtn = document.getElementById('gallery-next');
+  const closeBtn = document.getElementById('gallery-close');
+  
+  if (prevBtn && !prevBtn.__handlersSetup) {
+    prevBtn.__handlersSetup = true;
+    prevBtn.onclick = (e) => { e.stopPropagation(); goPrev(); };
+    prevBtn.addEventListener('touchend', (e) => { e.stopPropagation(); goPrev(); }, { passive: true });
+    prevBtn.addEventListener('mouseenter', function() { this.style.background = 'rgba(255,255,255,0.4)'; });
+    prevBtn.addEventListener('mouseleave', function() { this.style.background = 'rgba(255,255,255,0.2)'; });
+  }
+  if (nextBtn && !nextBtn.__handlersSetup) {
+    nextBtn.__handlersSetup = true;
+    nextBtn.onclick = (e) => { e.stopPropagation(); goNext(); };
+    nextBtn.addEventListener('touchend', (e) => { e.stopPropagation(); goNext(); }, { passive: true });
+    nextBtn.addEventListener('mouseenter', function() { this.style.background = 'rgba(255,255,255,0.4)'; });
+    nextBtn.addEventListener('mouseleave', function() { this.style.background = 'rgba(255,255,255,0.2)'; });
+  }
+  if (closeBtn && !closeBtn.__handlersSetup) {
+    closeBtn.__handlersSetup = true;
+    closeBtn.onclick = (e) => { e.stopPropagation(); modal.style.display = 'none'; document.removeEventListener('keydown', handleKeyNav); };
+    closeBtn.addEventListener('touchend', (e) => { e.stopPropagation(); modal.style.display = 'none'; document.removeEventListener('keydown', handleKeyNav); }, { passive: true });
+    closeBtn.addEventListener('mouseenter', function() { this.style.background = 'rgba(255,255,255,0.4)'; });
+    closeBtn.addEventListener('mouseleave', function() { this.style.background = 'rgba(255,255,255,0.2)'; });
+  }
+
+  // Setup keyboard navigation
+  document.addEventListener('keydown', handleKeyNav);
 }
 
 function createDots() {
@@ -108,16 +159,17 @@ function createDots() {
   dotsContainer.innerHTML = '';
   currentImages.forEach((_, idx) => {
     const dot = document.createElement('button');
-    dot.style.width = '12px';
-    dot.style.height = '12px';
+    dot.style.width = '20px';
+    dot.style.height = '20px';
     dot.style.borderRadius = '50%';
     dot.style.border = '2px solid #fff';
     dot.style.background = idx === currentIndex ? '#fff' : 'rgba(255,255,255,0.3)';
     dot.style.cursor = 'pointer';
     dot.style.transition = 'all 0.3s';
-    dot.style.padding = '0';
+    dot.style.padding = '4px';
     dot.style.minHeight = 'auto';
     dot.style.minWidth = 'auto';
+    dot.style.touchAction = 'manipulation';
     dot.onclick = () => {
       currentIndex = idx;
       showModalImage();
@@ -140,9 +192,17 @@ function showModalImage() {
   updateDots();
 }
 
+function handleKeyNav(e) {
+  if (modal.style.display !== 'flex') return;
+  if (e.key === 'ArrowLeft') goPrev();
+  else if (e.key === 'ArrowRight') goNext();
+  else if (e.key === 'Escape') modal.style.display = 'none';
+}
+
 modal.onclick = (e) => {
   if (e.target === modal) {
     modal.style.display = 'none';
+    document.removeEventListener('keydown', handleKeyNav);
   }
 };
 
@@ -157,23 +217,3 @@ function goPrev() {
   currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
   showModalImage();
 }
-
-const modalImg = document.getElementById('gallery-modal-img');
-if (modalImg) {
-  modalImg.onclick = function(e) {
-    const rect = modalImg.getBoundingClientRect();
-    const x = e.clientX;
-    if (x < rect.left + rect.width / 2) goPrev(); else goNext();
-  };
-  modalImg.addEventListener('touchend', function(e) {
-    const touch = e.changedTouches && e.changedTouches[0];
-    if (!touch) return;
-    const rect = modalImg.getBoundingClientRect();
-    const x = touch.clientX;
-    if (x < rect.left + rect.width / 2) goPrev(); else goNext();
-  }, { passive: true });
-}
-
-modal.onclick = function(e) {
-  if (e.target === modal) modal.style.display = 'none';
-};
