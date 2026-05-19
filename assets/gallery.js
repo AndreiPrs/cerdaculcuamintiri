@@ -117,12 +117,13 @@ function openModal(images, startIndex) {
       if (x < rect.left + rect.width / 2) goPrev(); else goNext();
     };
     modalImg.addEventListener('touchend', function(e) {
+      e.preventDefault();
       const touch = e.changedTouches && e.changedTouches[0];
       if (!touch) return;
       const rect = modalImg.getBoundingClientRect();
       const x = touch.clientX;
       if (x < rect.left + rect.width / 2) goPrev(); else goNext();
-    }, { passive: true });
+    }, { passive: false });
   }
 
   // Setup arrow button handlers
@@ -133,21 +134,21 @@ function openModal(images, startIndex) {
   if (prevBtn && !prevBtn.__handlersSetup) {
     prevBtn.__handlersSetup = true;
     prevBtn.onclick = (e) => { e.stopPropagation(); goPrev(); };
-    prevBtn.addEventListener('touchend', (e) => { e.stopPropagation(); goPrev(); }, { passive: true });
+    prevBtn.addEventListener('touchend', (e) => { e.preventDefault(); e.stopPropagation(); goPrev(); }, { passive: false });
     prevBtn.addEventListener('mouseenter', function() { this.style.background = 'rgba(255,255,255,0.4)'; });
     prevBtn.addEventListener('mouseleave', function() { this.style.background = 'rgba(255,255,255,0.2)'; });
   }
   if (nextBtn && !nextBtn.__handlersSetup) {
     nextBtn.__handlersSetup = true;
     nextBtn.onclick = (e) => { e.stopPropagation(); goNext(); };
-    nextBtn.addEventListener('touchend', (e) => { e.stopPropagation(); goNext(); }, { passive: true });
+    nextBtn.addEventListener('touchend', (e) => { e.preventDefault(); e.stopPropagation(); goNext(); }, { passive: false });
     nextBtn.addEventListener('mouseenter', function() { this.style.background = 'rgba(255,255,255,0.4)'; });
     nextBtn.addEventListener('mouseleave', function() { this.style.background = 'rgba(255,255,255,0.2)'; });
   }
   if (closeBtn && !closeBtn.__handlersSetup) {
     closeBtn.__handlersSetup = true;
     closeBtn.onclick = (e) => { e.stopPropagation(); modal.style.display = 'none'; document.removeEventListener('keydown', handleKeyNav); };
-    closeBtn.addEventListener('touchend', (e) => { e.stopPropagation(); modal.style.display = 'none'; document.removeEventListener('keydown', handleKeyNav); }, { passive: true });
+    closeBtn.addEventListener('touchend', (e) => { e.preventDefault(); e.stopPropagation(); modal.style.display = 'none'; document.removeEventListener('keydown', handleKeyNav); }, { passive: false });
     closeBtn.addEventListener('mouseenter', function() { this.style.background = 'rgba(255,255,255,0.4)'; });
     closeBtn.addEventListener('mouseleave', function() { this.style.background = 'rgba(255,255,255,0.2)'; });
   }
