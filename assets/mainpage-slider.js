@@ -2,7 +2,10 @@
 const sliderImages = [
   'mainpage/foto1.jpeg',
   'mainpage/foto2.jpeg',
-  'mainpage/foto3.jpeg'
+  'mainpage/foto3.jpeg',
+  'mainpage/foto4.jpeg',
+  'mainpage/foto5.jpeg',
+  'mainpage/foto6.jpeg'
 ];
 
 const sliderContainer = document.createElement('div');
