@@ -7,34 +7,48 @@
 
 <url>
   <loc>https://cerdaculcuamintiri.casa/</loc>
-  <lastmod>2026-03-26T15:09:44+00:00</lastmod>
+  <lastmod>2026-05-22T00:00:00+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://cerdaculcuamintiri.casa/index.html</loc>
-  <lastmod>2026-03-26T15:09:44+00:00</lastmod>
+  <lastmod>2026-05-22T00:00:00+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://cerdaculcuamintiri.casa/about.html</loc>
-  <lastmod>2026-03-26T15:09:44+00:00</lastmod>
+  <lastmod>2026-05-22T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://cerdaculcuamintiri.casa/attractions.html</loc>
+  <lastmod>2026-05-22T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://cerdaculcuamintiri.casa/benefits.html</loc>
+  <lastmod>2026-05-22T00:00:00+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://cerdaculcuamintiri.casa/gallery.html</loc>
-  <lastmod>2026-03-26T15:09:44+00:00</lastmod>
+  <lastmod>2026-05-22T00:00:00+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://cerdaculcuamintiri.casa/reservation.html</loc>
-  <lastmod>2026-03-26T15:09:44+00:00</lastmod>
+  <lastmod>2026-05-22T00:00:00+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://cerdaculcuamintiri.casa/contact.html</loc>
-  <lastmod>2026-03-26T15:09:44+00:00</lastmod>
+  <lastmod>2026-05-22T00:00:00+00:00</lastmod>
   <priority>0.80</priority>
 </url>
-
+<url>
+  <loc>https://cerdaculcuamintiri.casa/termeni-conditii.html</loc>
+  <lastmod>2026-05-22T00:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
 
 </urlset>
