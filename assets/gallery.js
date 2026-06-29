@@ -8,8 +8,8 @@ const roomManifests = {
   'dormitor3': ["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg"],
   'hol': ["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg","photo6.jpg"],
   'living2': ["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg"],
-  'curte': ["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg"],
-  'foisor': ["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg"]
+  'curte': ["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg","photo6.jpg"],
+  'foisor': ["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg"]
 };
 
 const parterRooms = [
@@ -25,8 +25,8 @@ const etajRooms = [
   { name: 'Living etaj', folder: 'living2' }
 ];
 const exteriorRooms = [
-  { name: 'Curte', folder: 'curte' },
-  { name: 'Foisor', folder: 'foisor' }
+  { name: 'Curte cu loc de joaca', folder: 'curte' },
+  { name: 'Foisor si terasa', folder: 'foisor' }
 ];
 
 function createRoomGallery(room, parentId) {
